@@ -1,0 +1,27 @@
+    
+---
+- name: Create Tomcat user
+  hosts: security_host
+  gather_facts: false
+  remote_user: root
+  become: yes
+  vars_files: var.yml
+  tasks:
+    - include_vars: var.yml       
+    - name: Create a Tomcat User
+      user:
+          name: "{{tomcat_home}}"
+           
+    - name: Create a Tomcat Group
+      group:
+        name: "{{tomcat_home}}"
+     
+    - name: Create a Tomcat Directory
+      file:
+        path: /home/{{tomcat_home}}
+        owner: "{{tomcat_home}}"
+        group: "{{tomcat_home}}"
+        mode: 0755
+        recurse: yes
+        
+    
